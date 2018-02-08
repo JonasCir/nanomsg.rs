@@ -99,7 +99,7 @@ impl Error {
             nanomsg_sys::EINTR => Error::Interrupted,
             _ => Error::Unknown
         };
-        log!("Error in nanomsg was {}", ret);
+        error!("Error in nanomsg was {}", ret.to_string());
         ret
     }
 }
