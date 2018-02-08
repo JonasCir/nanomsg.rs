@@ -1,6 +1,9 @@
 extern crate nanomsg_sys;
 extern crate libc;
 
+#[macro_use]
+extern crate log;
+
 pub use result::{Result, Error};
 pub use endpoint::Endpoint;
 
@@ -308,6 +311,7 @@ impl Socket {
             return Err(Error::from_raw(nanomsg_sys::EINVAL));
         }
         let ret = unsafe { nanomsg_sys::nn_bind(self.socket, c_addr.unwrap().as_ptr()) };
+        info!("Bind call returned {}", ret);
 
         error_guard!(ret);
         Ok(Endpoint::new(ret, self.socket))
